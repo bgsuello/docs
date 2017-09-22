@@ -22,7 +22,7 @@ Vue.use(Router)
 export function createRouter () {
   const router = new Router({
     base: release ? `/releases/${release}` : __dirname,
-    mode: release ? 'hash' : 'history',
+    mode: 'history',
     scrollBehavior: () => ({ y: 0 }),
     routes: [
       route('/', 'Home'),

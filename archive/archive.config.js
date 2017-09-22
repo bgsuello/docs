@@ -115,6 +115,11 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       {
+        from: '/.htaccess',
+        to: '../.htaccess',
+        ignore: ['.*']
+      },
+      {
         from: 'static',
         to: '../static',
         ignore: ['.*']
