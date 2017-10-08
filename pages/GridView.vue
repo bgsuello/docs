@@ -1,8 +1,8 @@
 <template lang="pug">
   component-view(v-bind:doc="doc")
-    v-alert(info value="true" slot="top") If you are looking for <strong>Grid lists</strong>, please navigate <router-link class="white--text" to="/components/grid-lists">here</router-link>.
+    v-alert(color="info" icon="info" value="true" slot="top") If you are looking for <strong>Grid lists</strong>, please navigate <router-link class="white--text" to="/components/grid-lists">here</router-link>.
     grid(slot="top").mt-5
-    v-alert(info value).mb-4 Vuetify breakpoint functionality requires the use of the <code>v-app</code> component.
+    v-alert(color="info" icon="info" value).mb-4 Vuetify breakpoint functionality requires the use of the <code>v-app</code> component.
     section-header Breakpoint object
     section-text Vuetify converts the available breakpoints into an accessible object from within your application. This will allow you to assign/apply specific properties and attributes based upon viewport size. The object can be accessed from:
     markup(lang="js")
@@ -52,13 +52,13 @@
           edit: 'GridView',
           desc: `Vuetify has a 12 point grid system. Built using <kbd>flex-box</kbd>, the grid is used to layout an application\'s content.  It contains 5 types of media breakpoints that are used for targeting specific screen sizes or orientations. The props for grid components are actually classes that are derived from their defined properties. This allows you to easily specify these helper classes as props, while still providing the classes to be used anywhere.`,
           examples: [
-            { header: 'Grid', file: 'grid/1', desc: `The <code>v-container</code> can be used for a center focused page, or given the <code>fluid</code> prop to extend its full width. <code>v-layout</code> is used for separating sections and contains the <code>v-flex</code>. The structure of your layout will be as follows, <strong>v-container</strong> &raquo; <strong>v-layout</strong> &raquo; <strong>v-flex</strong>. Each part of the grid chain is a flex-box element. The final, <code>v-flex</code>, automatically sets its children to have <kbd>flex: 1 1 auto</kbd>.` },
-            { header: 'Offset', file: 'grid/2', desc: `Offsets are useful for compensating for elements that may not be visible yet, or to control the position of content. Just as with breakpoints, you can set an offset for any available sizes. This allows you to fine tune your application layout precisely to your needs.` },
-            { header: 'Order', file: 'grid/3', desc: 'You can control the ordering of grid items. As with offsets, you can set different orders for different sizes. Design specialized screen layouts that accommodate to any application.' },
-            { header: 'Direction and Align', file: 'grid/4', desc: 'Designate the direction and alignment in a variety of ways. All of the available <kbd>flex-box</kbd> api is available through intuitive helper props.' },
-            { header: 'Row and column based on breakpoint', file: 'grid/5', desc: 'Dynamically change your layout based upon resolution. <strong>(resize your screen and watch the layout change to a <code>row</code> on small breakpoints)</strong>' },
-            { header: 'Nested grid', file: 'grid/6', desc: 'Grids can be nested, similar to other frameworks, in order to achieve very custom layouts.'},
-            { header: 'Unique layouts', file: 'grid/7', desc: 'The power and flexiblity of the Vuetify grid system allows you to create amazing user interfaces.'}
+            { header: 'Grid', file: 'grid/grid', desc: `The <code>v-container</code> can be used for a center focused page, or given the <code>fluid</code> prop to extend its full width. <code>v-layout</code> is used for separating sections and contains the <code>v-flex</code>. The structure of your layout will be as follows, <strong>v-container</strong> &raquo; <strong>v-layout</strong> &raquo; <strong>v-flex</strong>. Each part of the grid chain is a flex-box element. The final, <code>v-flex</code>, automatically sets its children to have <kbd>flex: 1 1 auto</kbd>.` },
+            { header: 'Offset', file: 'grid/offset', desc: `Offsets are useful for compensating for elements that may not be visible yet, or to control the position of content. Just as with breakpoints, you can set an offset for any available sizes. This allows you to fine tune your application layout precisely to your needs.` },
+            { header: 'Order', file: 'grid/order', desc: 'You can control the ordering of grid items. As with offsets, you can set different orders for different sizes. Design specialized screen layouts that accommodate to any application.' },
+            { header: 'Direction and Align', file: 'grid/direction-and-align', desc: 'Designate the direction and alignment in a variety of ways. All of the available <kbd>flex-box</kbd> api is available through intuitive helper props.' },
+            { header: 'Row and column based on breakpoint', file: 'grid/row-column-breakpoint', desc: 'Dynamically change your layout based upon resolution. <strong>(resize your screen and watch the layout change to a <code>row</code> on small breakpoints)</strong>' },
+            { header: 'Nested grid', file: 'grid/nested-grid', desc: 'Grids can be nested, similar to other frameworks, in order to achieve very custom layouts.'},
+            { header: 'Unique layouts', file: 'grid/unique-layouts', desc: 'The power and flexiblity of the Vuetify grid system allows you to create amazing user interfaces.'}
           ],
           props: {
             'v-container': {
@@ -212,13 +212,13 @@
           },
           slots: {
             'v-container': {
-              default: true
+              shared: ['default']
             },
             'v-layout': {
-              default: true
+              shared: ['default']
             },
             'v-flex': {
-              default: true
+              shared: ['default']
             }
           },
           functional: {

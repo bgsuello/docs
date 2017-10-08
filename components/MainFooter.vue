@@ -1,6 +1,5 @@
 <template lang="pug">
-  v-footer.white.main-footer.layout.wrap
-    ad2
+  v-footer(app).white.main-footer.layout.wrap
     v-layout(row grow).ma-0
       v-flex(
         v-if="previous.route"

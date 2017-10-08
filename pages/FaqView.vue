@@ -23,7 +23,7 @@
         )
           div(slot="header").pr-5
             strong Question: &nbsp;
-            span(v-html="faq.q") 
+            span(v-html="faq.q")
           v-divider
           v-card.grey.lighten-4
             v-card-text
@@ -34,11 +34,11 @@
           v-if="!faqs.length"
         ).text-xs-center.mb-5
           h3 No results found
-          v-btn(primary flat @click="resetSearch") Reset search
+          v-btn(color="primary" flat @click="resetSearch") Reset search
 
       div.text-xs-center
         div.mb-3 Have something that you think belongs here?
-        v-btn(outline success round href="https://chat.vuetifyjs.com" target="_blank" rel="noopener") Let us know
+        v-btn(outline color="success" round href="https://chat.vuetifyjs.com" target="_blank" rel="noopener") Let us know
 </template>
 
 <script>
@@ -96,11 +96,15 @@
         {
           q: `My dialog closes immediately after clicking the button`,
           a: `When not using the <strong>activator</strong> slot for <code>v-menu</code> and <code>v-dialog</code> for example, you must manually stop the <em>propagation</em> of the click event. To do this, simply add the <em>.stop</em> modifier to the click event, <code>@click.stop="myMethod"</code>.`
+        },
+        {
+          q: `Relative images are not working in <code>v-card</code> components`,
+          a: `Vue loader converts relative paths into require functions automatically for you. Unfortunately, this is not the case when it comes to custom components. In order to use relative paths, you must use the <code>require</code> function, e.g. <code>:src="require('/path/to/relative/asset')"</code>`
         }
       ],
       search: ''
     }),
-    
+
     computed: {
       faqs () {
         return this.gotchas.filter(qa => {

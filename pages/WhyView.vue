@@ -25,7 +25,7 @@
     v-layout(row wrap justify-space-between)
       v-flex(xs12 md8)
         section-text Choosing a framework can be a daunting task, and I'm not even talking about component frameworks. You've arrived at Vue and now it's time to start developing your next great idea. There are many options to choose from, and everyone says that they are great. So you have to decide, what are my metrics for success?
-        section-text This was me almost a year ago. There were plenty of <strong>UI toolkits</strong> to choose from, but none them had everything that I needed...yeah, you've heard that before. Often enough though, it <em>is</em> the reason individuals attempt to create products that fill gaps, and is why I started working on Vuetify.
+        section-text This was me almost a year ago. There were plenty of <strong>UI toolkits</strong> to choose from, but none them had everything that I needed...yeah, you've heard that before. Often enough though, it <em>is</em> the reason individual's attempts to create products that fill gaps, and is why I started working on Vuetify.
         section-text.mb-0 But now you are the one searching for that perfect framework, and Vuetify is another on a list of many, vying for your attention. While my opinion will be subjective, I will try to outline features that I believe will be valuable to you and/or your organization.
         section-header.title
           v-icon.mr-3.purple--text brush
@@ -62,32 +62,35 @@
               width="150px"
             ).my-5
       v-flex(xs12 md3)
-        v-card(
-          flat
-          tile
-          v-badge="{ value: 'favorite', overlap: true, icon: true }"
-        ).red--after
-          v-list
-            v-list-tile(avatar tag="div")
-              v-list-tile-avatar
-                v-avatar
-                  img(src="/static/doc-images/john.jpg")
-              v-list-tile-content
-                v-list-tile-title John Leider
-                v-list-tile-sub-title Author of Vuetify.js
-              v-list-tile-action
-                v-btn(
-                  icon
-                  href="mailto:john@vuetifyjs.com"
-                  v-tooltip:left="{ html: 'Contact Me' }"
-                )
-                  v-icon mail
-          v-card-text I am extremely humbled that you have considered using Vuetify as your next UI Framework. A lot of care has went into forging the perfect setup for taking any idea from conception to production. I look forward to you joining the Vuetify community and am excited to see what incredible interfaces you create!
-          v-card-text.text-xs-right <em>&mdash;John Leider</em>
+        v-badge(color="error" overlap)
+          v-icon(slot="badge" left overlap class="white--text") favorite
+          v-card(
+            flat
+            tile
+          ).red--after
+            v-list
+              v-list-tile(avatar tag="div")
+                v-list-tile-avatar
+                  v-avatar
+                    img(src="/static/doc-images/john.jpg")
+                v-list-tile-content
+                  v-list-tile-title John Leider
+                  v-list-tile-sub-title Author of Vuetify.js
+                v-list-tile-action
+                  v-tooltip(left)
+                    v-btn(
+                      icon
+                      href="mailto:john@vuetifyjs.com"
+                      slot="activator"
+                    )
+                      v-icon mail
+                    span Contact Me
+            v-card-text I am extremely humbled that you have considered using Vuetify as your next UI Framework. A lot of care has went into forging the perfect setup for taking any idea from conception to production. I look forward to you joining the Vuetify community and am excited to see what incredible interfaces you create!
+            v-card-text.text-xs-right <em>&mdash;John Leider</em>
 
     div.text-xs-center.my-5
       em Still have questions?<br>
-      v-btn(flat outline round success href="https://chat.vuetifyjs.com" target="_blank") Ask the Community
+      v-btn(flat outline round color="success" href="https://chat.vuetifyjs.com" target="_blank") Ask the Community
 </template>
 
 <script>
@@ -100,7 +103,7 @@
         { title: 'Chat Support' },
         { title: 'Modular Component Transition System' },
         { title: 'Blazing Fast Framework' },
-        { title: 'A La Carte (coming soon)' }
+        { title: 'A La Carte components' }
       ],
       list: [
         { check: true, text: 'Good for SEO' },
@@ -134,12 +137,12 @@
     .section-text
       margin-bottom: 24px !important
 
-  .pillars      
+  .pillars
     .flex
       display: flex
       flex: 1 1 auto
       flex-direction: column
-      
+
       .card
         flex: 1 1 auto
 </style>

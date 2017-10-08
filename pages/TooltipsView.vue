@@ -6,56 +6,58 @@
   export default {
     data () {
       return {
-        items: [
-          {
-            text: 'foo',
-            value: 1
-          },
-          {
-            text: 'foobar',
-            value: 2
-          }
-        ],
         doc: {
           title: 'Tooltip',
-          desc: 'The <code>v-tooltip</code> directive is useful for conveying information when a user hovers over an element.',
+          component: 'VTooltip',
+          edit: 'TooltipsView',
+          desc: 'The <code>v-tooltip</code> component is useful for conveying information when a user hovers over an element. You can also programmtically control the display of tooltips through a <strong>v-model</strong>',
           props: {
             'v-tooltip': {
+              shared: ['delayable', 'menu', 'lazy'],
+              model: {
+                type: ['Boolean'],
+                default: 'False'
+              },
               params: [
                 [
-                  'modifiers',
+                  'color',
                   'String',
-                  'Required',
-                  'top, right, bottom, left',
+                  '-',
+                  'Apply a custom color to the tooltip background'
                 ],
                 [
-                  'html',
-                  'String',
-                  'Required',
-                  'The content for the tooltip',
+                  'debounce',
+                  '[Number, String]',
+                  '100',
+                  'Duration before tooltip is shown and hidden when hovered'
                 ],
                 [
-                  'visible',
-                  'Boolean',
-                  'True',
-                  'Tooltip object property for determining visibility, see example #2'
+                  'tag',
+                  'String',
+                  'span',
+                  'The tooltip tag'
+                ],
+                [
+                  'transition',
+                  'String',
+                  '-',
+                  'By default, this is automatically calculated depending on the position options used. Can be removed with a Boolean (false) value or changed by providing your own'
+                ],
+                [
+                  'z-index',
+                  '*',
+                  '99',
+                  'The z-index used for the tooltip'
                 ]
               ]
             }
           },
           examples: [
-            { header: 'Default', file: 'tooltips/1', desc: 'Tooltips can be applied to any element that does not use the <code>:before</code> pseudo element' },
-            { header: 'Visibility', file: 'tooltips/2', desc: 'Tooltips can be disabled using the <code>visible</code> property value in the tooltip object.' }
+            { header: 'Default', file: 'tooltips/default', desc: 'Tooltips can wrap any element.' },
+            { header: 'Visibility', file: 'tooltips/visibility', desc: 'Tooltip visibility can be programmatically changed using <code>v-model</code>.' }
           ]
         }
       }
     }
   }
 </script>
-
-<style lang="stylus"
-       scoped
->
-  .btn
-    margin: 1rem
-</style>

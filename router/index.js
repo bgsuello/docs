@@ -22,8 +22,26 @@ Vue.use(Router)
 export function createRouter () {
   const router = new Router({
     base: release ? `/releases/${release}` : __dirname,
+<<<<<<< HEAD
     mode: 'history',
     scrollBehavior: () => ({ y: 0 }),
+=======
+    mode: release ? 'hash' : 'history',
+    scrollBehavior (to, from, savedPosition) {
+      if (savedPosition) {
+        return savedPosition
+      }
+
+      if (to.hash) {
+        return {
+          selector: to.hash,
+          offset: { y: 80 }
+        }
+      }
+
+      return { y: 0 }
+    },
+>>>>>>> vuetifyjs/dev
     routes: [
       route('/', 'Home'),
       route('/vuetify/quick-start', 'QuickStart'),
@@ -47,6 +65,7 @@ export function createRouter () {
       route('/motion/transitions', 'Transitions'),
       route('/components/alerts', 'Alerts'),
       route('/components/avatars', 'Avatars'),
+      route('/components/badges', 'Badges'),
       route('/components/breadcrumbs', 'Breadcrumbs'),
       route('/components/bottom-navigation', 'BottomNavigation'),
       route('/components/bottom-sheets', 'BottomSheets'),
@@ -79,14 +98,14 @@ export function createRouter () {
       route('/components/tabs', 'Tabs'),
       route('/components/text-fields', 'TextFields'),
       route('/components/toolbars', 'Toolbars'),
-      route('/directives/badges', 'Badges'),
+      route('/components/tooltips', 'Tooltips'),
       route('/directives/resizing', 'Resize'),
       route('/directives/ripples', 'Ripples'),
       route('/directives/scrolling', 'Scroll'),
-      route('/directives/tooltips', 'Tooltips'),
       route('/directives/touch-support', 'Touch'),
       route('/pre-made-themes', 'PremadeThemes'),
       route('/guides/server-side-rendering', 'SSR'),
+      route('/examples/:example+', 'Example'), // TODO: 404 if there's an extension (regex?)
       // Global redirect for 404
       { path: '*', redirect: '/' }
     ]

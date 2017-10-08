@@ -13,20 +13,21 @@
           id: '#data-tables-view',
           desc: `The <code>v-data-table</code> component is used for displaying tabular data. Features include sorting, searching, pagination, inline-editing, header tooltips, and row selection.`,
           examples: [
-            { header: 'Standard', file: 'tables/1', desc: 'The standard data-table contains data with no additional functionality. You can opt out of displaying table actions that allow you to control the pagination of information with the <code>hide-actions</code> prop.' },
-            { header: 'Slots: items and headers', file: 'tables/7', desc: 'The <code>items</code> and <code>headers</code> slots can accept either a collection of <kbd>td/th</kbd> tags, or if you want control of the entire row, a <kbd>tr</kbd> tag.' },
-            { header: 'Slots: headerCell', file: 'tables/8', desc: 'If you only want to apply some common markup or effect on each of the header cells, you can use the slot <code>headerCell</code>. In this example is has been used to apply a tooltip to each header.' },
-            { header: 'Slots: footer', file: 'tables/10', desc: 'There is also a <code>footer</code> slot for when you want to add some extra functionality to tables, for example per column filtering or search.' },
-            { header: 'Selectable rows', file: 'tables/2', desc: 'Selectable rows allow you to perform an action on specific and all rows.' },
-            { header: 'Search with custom page text', file: 'tables/3', desc: 'The data table exposes a <code>search</code> prop that allows you to filter your data.' },
-            { header: 'External pagination', file: 'tables/4', desc: 'Pagination can be controlled externally by using the <code>pagination</code> prop. Remember that you must apply the <code>.sync</code> modifier.' },
-            { header: 'External sorting', file: 'tables/5', desc: 'Sorting can also be controlled externally by using the <code>pagination</code> prop. Remember that you must apply the <code>.sync</code> modifier. You can also use the prop to set the default sorted column.' },
-            { header: 'Paginate and sort server-side', file: 'tables/6', desc: 'If you\'re loading data from a backend and want to paginate and sort the results before displaying them, you can use the <code>total-items</code> prop. Defining this prop will disable the built-in sorting and pagination, and you will instead need to use the <code>pagination</code> prop to listen for changes. Use the <code>loading</code> prop to display a progress bar while fetching data.'},
-            { header: 'Theme support', file: 'tables/9', desc: 'The <code>v-data-table</code> component supports the application dark theme.'}
+            { header: 'Standard', file: 'tables/standard', desc: 'The standard data-table contains data with no additional functionality. You can opt out of displaying table actions that allow you to control the pagination of information with the <code>hide-actions</code> prop.' },
+            { header: 'Slots: items and headers', file: 'tables/headers', desc: 'The <code>items</code> and <code>headers</code> slots can accept either a collection of <kbd>td/th</kbd> tags, or if you want control of the entire row, a <kbd>tr</kbd> tag.' },
+            { header: 'Slots: headerCell', file: 'tables/headerCell', desc: 'If you only want to apply some common markup or effect on each of the header cells, you can use the slot <code>headerCell</code>. In this example is has been used to apply a tooltip to each header.' },
+            { header: 'Slots: footer', file: 'tables/footer', desc: 'There is also a <code>footer</code> slot for when you want to add some extra functionality to tables, for example per column filtering or search.' },
+            { header: 'Slots: expand', file: 'tables/expand', desc: 'The <code>v-data-table</code> component also supports expandable rows using the <code>expand</code> slot. You can use the prop <code>expand</code> to prevent expanded rows from closing when clicking on another row.'},
+            { header: 'Selectable rows', file: 'tables/select', desc: 'Selectable rows allow you to perform an action on specific and all rows.' },
+            { header: 'Search with custom page text', file: 'tables/search', desc: 'The data table exposes a <code>search</code> prop that allows you to filter your data.' },
+            { header: 'External pagination', file: 'tables/paginate', desc: 'Pagination can be controlled externally by using the <code>pagination</code> prop. Remember that you must apply the <code>.sync</code> modifier.' },
+            { header: 'External sorting', file: 'tables/sort', desc: 'Sorting can also be controlled externally by using the <code>pagination</code> prop. Remember that you must apply the <code>.sync</code> modifier. You can also use the prop to set the default sorted column.' },
+            { header: 'Paginate and sort server-side', file: 'tables/server', desc: 'If you\'re loading data from a backend and want to paginate and sort the results before displaying them, you can use the <code>total-items</code> prop. Defining this prop will disable the built-in sorting and pagination, and you will instead need to use the <code>pagination</code> prop to listen for changes. Use the <code>loading</code> prop to display a progress bar while fetching data.'},
+            { header: 'Theme support', file: 'tables/theme', desc: 'The <code>v-data-table</code> component supports the application dark theme.'}
           ],
           props: {
             'v-data-table': {
-              shared: ['filterable', 'theme'],
+              shared: ['filterable', 'loadable', 'theme'],
               params: [
                 [
                   'headers',
@@ -57,6 +58,12 @@
                   'String',
                   'No matching records found',
                   'Display text when there are no filtered results.'
+                ],
+                [
+                  'must-sort',
+                  'Boolean',
+                  'False',
+                  'Forces at least one column to always be sorted'
                 ],
                 [
                   'rows-per-page-text',
@@ -91,10 +98,7 @@
                 [
                   'filter',
                   'Function',
-                  `(val, search) => {
-                  defined', 'boolean'].indexOf(typeof val) === -1 &&
-                      val.toString().toLowerCase().indexOf(search) !== -1
-                  }`,
+                  `(val, search) => { return val !== null && ['undefined', 'boolean'].indexOf(typeof val) === -1 && val.toString().toLowerCase().indexOf(search) !== -1 }`,
                   'The filtering method for search'
                 ],
                 [
@@ -110,16 +114,16 @@
                   'Custom sort filter'
                 ],
                 [
+                  'must-sort',
+                  'Boolean',
+                  'false',
+                  'Ensures that column is always sorted instead of toggling between <code>sorted ascending</code>/<code>sorted descending</code>/<code>unsorted</code> states'
+                ],
+                [
                   'total-items',
                   'Number',
                   '-',
                   'Manually sets total number of row items, which disables built-in sort and pagination. Used together with pagination prop to enable server-side sort and pagination.'
-                ],
-                [
-                  'loading',
-                  '[Boolean, String]',
-                  'False',
-                  'Displays progress bar. Can either be a String which specifies which color is applied to the progress bar (primary, secondary, success, info, warning, error) or a Boolean (which uses the primary color)'
                 ],
                 [
                   'pagination.sync',
@@ -132,6 +136,18 @@
                     totalItems: 0
                   }`,
                   'Used to control pagination and sorting from outside the data table. Can also be used to set default sorted column.'
+                ],
+                [
+                  'expand',
+                  'Boolean',
+                  'False',
+                  'Designates the table as containing rows that are expandable.'
+                ],
+                [
+                  'item-key',
+                  '*',
+                  'id',
+                  'The field in the item object that designates a unique key'
                 ]
               ],
               model: {
@@ -155,13 +171,13 @@
                   `Set's the default text for the save button when using the <code>large</code> prop`
                 ],
                 [
-                  'Large',
+                  'large',
                   'Boolean',
                   'False',
                   'Attachs a submit and cancel button to the dialog'
                 ],
                 [
-                  'Lazy',
+                  'lazy',
                   'Boolean',
                   'False',
                   'Lazily load the dialog contents'
@@ -176,6 +192,7 @@
             }
           },
           slots: {
+            shared: ['progress'],
             'v-data-table': {
               params: [
                 [

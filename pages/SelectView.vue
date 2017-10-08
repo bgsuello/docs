@@ -1,5 +1,6 @@
 <template lang="pug">
   component-view(v-bind:doc="doc")
+    mask-table
 </template>
 
 <script>
@@ -12,19 +13,19 @@
           component: 'VSelect',
           edit: 'SelectView',
           examples: [
-            { header: 'Light theme', file: 'selects/1', desc: 'A standard single select has a multitude of configuration options.' },
-            { header: 'Dark theme', file: 'selects/2', desc: 'Selects also support themeing, dark and light.' },
-            { header: 'Icons', file: 'selects/3', desc: 'Use a custom prepended or appended icon.' },
-            { header: 'Multiple', file: 'selects/4', desc: `A multi-select can utilize v-chip as the display for selected items.` },
-            { header: 'Autocomplete', file: 'selects/5', desc: `Provides type-ahead autocomplete functionality.` },
-            { header: 'Scoped slots', file: 'selects/6', desc: `With the power of scoped slots, you can customize the visual output of the select. In this example we add a profile picture for both the chips and list items.` },
-            { header: 'Customized item text and value', file: 'selects/7', desc: `You can specify the specific properties within your items array correspond to the text and value fields. By default, this is <strong>text</strong> and <strong>value</strong>. In this example we also use the <code>return-object</code> prop which will return the entire object of the selected item on selection.` },
-            { header: 'Tags', new: '0.15.3', file: 'selects/8', desc: `With tags you can allow a user to create new values that may not be present in a provided items list. Keep in mind, tags only supports arrays of <strong>primitive</strong> items and cannot be used with props such as <code>item-text</code>, <code>item-value</code> for example.` },
-            { header: 'Asynchronous items', new: '0.15.3', file: 'selects/9', desc: 'Sometimes you need to load data externally based upon a search query. Use the <code>search-input</code> prop with the <strong>.sync</strong> modifier when using the <code>autocomplete</code> prop. We also make use of the new <code>cache-items</code> prop. This will keep a unique list of all items that have been passed to the <code>items</code> prop and is <strong>REQUIRED</strong> when using asynchronous items and the <strong>multiple</strong> prop.' }
+            { header: 'Light theme', file: 'selects/light', desc: 'A standard single select has a multitude of configuration options.' },
+            { header: 'Dark theme', file: 'selects/dark', desc: 'Selects also support theming, dark and light.' },
+            { header: 'Icons', file: 'selects/icons', desc: 'Use a custom prepended or appended icon.' },
+            { header: 'Multiple', file: 'selects/multiple', desc: `A multi-select can utilize v-chip as the display for selected items.` },
+            { header: 'Autocomplete', file: 'selects/autocomplete', desc: `Provides type-ahead autocomplete functionality.` },
+            { header: 'Scoped slots', file: 'selects/scoped-slots', desc: `With the power of scoped slots, you can customize the visual output of the select. In this example we add a profile picture for both the chips and list items.` },
+            { header: 'Customized item text and value', file: 'selects/custom-text-and-value', desc: `You can specify the specific properties within your items array correspond to the text and value fields. By default, this is <strong>text</strong> and <strong>value</strong>. In this example we also use the <code>return-object</code> prop which will return the entire object of the selected item on selection.` },
+            { header: 'Tags', new: '0.15.3', file: 'selects/tags', desc: `With tags you can allow a user to create new values that may not be present in a provided items list. Keep in mind, tags only supports arrays of <strong>primitive</strong> items and cannot be used with props such as <code>item-text</code>, <code>item-value</code> for example.` },
+            { header: 'Asynchronous items', new: '0.15.3', file: 'selects/asynchronous', desc: 'Sometimes you need to load data externally based upon a search query. Use the <code>search-input</code> prop with the <strong>.sync</strong> modifier when using the <code>autocomplete</code> prop. We also make use of the new <code>cache-items</code> prop. This will keep a unique list of all items that have been passed to the <code>items</code> prop and is <strong>REQUIRED</strong> when using asynchronous items and the <strong>multiple</strong> prop.' }
           ],
           props: {
             'v-select': {
-              shared: ['input', 'filterable'],
+              shared: ['input', 'filterable', 'loadable', 'mask', 'colorable'],
               params: [
                 [
                   'allow-overflow',
@@ -87,6 +88,12 @@
                   `Set property of <code>items</code>'s disabled value`
                 ],
                 [
+                  'item-avatar',
+                  'String',
+                  'avatar',
+                  `Set property of <code>items</code>'s avatar value`
+                ],
+                [
                   'max-height',
                   'Number, String',
                   '200',
@@ -141,14 +148,38 @@
                   'Changes the selection behavior to return the object directly rather than the value specified with item-value'
                 ],
                 [
+                  'multi-line',
+                  'Boolean',
+                  'False',
+                  'Causes label to float when the select component is focused or dirty'
+                ],
+                [
                   'search-input',
                   'String',
                   'null',
                   'Bound when using the autocomplete prop. Use the .sync modifier to catch user input from the autocomplete search input'
                 ],
+                [
+                  'segmented',
+                  'Boolean',
+                  'False',
+                  'Creates a segmented button - <a href="https://material.io/guidelines/components/buttons.html#buttons-dropdown-buttons" rel="noopener" target="_blank">spec</a>'
+                ],
+                [
+                  'overflow',
+                  'Boolean',
+                  'False',
+                  'Creates an overflow button - <a href="https://material.io/guidelines/components/buttons.html#buttons-dropdown-buttons" rel="noopener" target="_blank">spec</a>'
+                ],
+                [
+                  'editable',
+                  'Boolean',
+                  'False',
+                  'Creates an editable button - <a href="https://material.io/guidelines/components/buttons.html#buttons-dropdown-buttons" rel="noopener" target="_blank">spec</a>'
+                ],
               ],
               model: {
-                types: ['Array', 'Object'],
+                type: ['Array', 'Object'],
                 default: '-',
                 description: 'Single select requires model, multiple requires array'
               }
@@ -156,7 +187,10 @@
           },
           slots: {
             'v-select': {
-              shared: ['label']
+              shared: ['label', 'progress'],
+              params: [
+                ['no-data', 'Used when there are no filtered items when using autocomplete']
+              ]
             }
           },
           events: {

@@ -1,11 +1,25 @@
 <template lang="pug">
-  #home-view
-    v-toolbar(fixed :class="[toolbar ? 'toolbar--home' : 'hidden']" ).white.text-xs-center
+  #home-view(v-scroll="onScroll")
+    v-toolbar(fixed :class="[toolbar ? 'toolbar--home' : 'hidden']" app).white.text-xs-center
       img(src="/static/doc-images/header-logo.svg" height="38px")
       v-spacer
       v-toolbar-items
-        v-btn(flat to="/vuetify/quick-start") Documentation
-        v-btn(flat tag="a" href="https://github.com/vuetifyjs/vuetify/releases" target="_blank" rel="noopener").hidden-xs-only Updates
+        v-btn(
+          flat
+          to="/vuetify/quick-start"
+        ).subheading Documentation
+        v-btn(
+          flat
+          href="https://chat.vuetifyjs.com"
+          target="_blank"
+          rel="noopener"
+        ).hidden-xs-only.subheading Community
+        v-btn(
+          flat
+          href="https://github.com/vuetifyjs/vuetify/releases"
+          target="_blank"
+          rel="noopener"
+        ).hidden-xs-only.subheading Updates
 
     section#hero
       v-container(grid-list-xl)
@@ -21,40 +35,41 @@
               v-flex(xs12).py-1
                 h2 Material Component Framework
               v-flex(xs12 sm8 md6 lg4)
-                v-btn(block dark large to="/vuetify/quick-start").blue
+                v-btn(block color="blue" dark large to="/vuetify/quick-start")
                   span Documentation
               v-flex(xs12 sm8 md6 lg4)
                 v-btn(
                   large
                   block
+                  color="white"
                   tag="a"
                   href="https://github.com/vuetifyjs/vuetify"
                   target="_blank"
                   rel="noopener"
-                ).white.primary--text
+                ).primary--text
                   v-icon(left).primary--text fa-github
                   span Github
 
     div#section-body
       section#features.mb-3
-          v-container
-            v-card.elevation-2
-              v-card-text.py-5
-                v-layout(row wrap)
-                  v-flex(xs12 md4).text-xs-center.my-3
-                    img(src="/static/doc-images/feature1.svg")
-                    h3.mt-4.mb-3 Vue-CLI Templates
-                    p Vuetify comes ready to go with 5 pre-made vue-cli templates. From simple html to full-blown SSR, you are ready to go in minutes.
+        v-container(grid-list-md)
+          v-card.elevation-2
+            v-card-text.py-5
+              v-layout(row wrap)
+                v-flex(xs12 md4).text-xs-center.my-3
+                  img(src="/static/doc-images/feature1.svg")
+                  h3.mt-4.mb-3 Vue-CLI Templates
+                  p Vuetify comes ready to go with 5 pre-made vue-cli templates. From simple html to full-blown SSR, you are ready to go in minutes.
 
-                  v-flex(xs12 md4).text-xs-center.my-3
-                    img(src="/static/doc-images/feature2.svg")
-                    h3.mt-4.mb-3 Custom Layouts
-                    p Each and every available layout from the Material design spec is at your disposal. Create unique and flexible user interfaces that fit the scope of any project.
+                v-flex(xs12 md4).text-xs-center.my-3
+                  img(src="/static/doc-images/feature2.svg")
+                  h3.mt-4.mb-3 Custom Layouts
+                  p Each and every available layout from the Material design spec is at your disposal. Create unique and flexible user interfaces that fit the scope of any project.
 
-                  v-flex(xs12 md4).text-xs-center.my-3
-                    img(src="/static/doc-images/feature3.svg")
-                    h3.mt-4.mb-3 Semantic Material Components
-                    p Be prepared for an armada of specialized components at your disposal. With over 80 in total, there is a solution for any application.
+                v-flex(xs12 md4).text-xs-center.my-3
+                  img(src="/static/doc-images/feature3.svg")
+                  h3.mt-4.mb-3 Semantic Material Components
+                  p Be prepared for an armada of specialized components at your disposal. With over 80 in total, there is a solution for any application.
 
       section#sponsors.mb-3
           v-container
@@ -66,7 +81,7 @@
                       a(:href="sponsor.href" target="_blank" :title="sponsor.title" rel="noopener")
                         img(:src="sponsor.src").sponsor
                   v-flex(xs12).text-xs-center
-                    v-btn(to="/vuetify/sponsors-and-backers" large).white.primary--text Become a backer
+                    v-btn(to="/vuetify/sponsors-and-backers" large color="white").primary--text Become a backer
                       v-icon(right).primary--text fa-arrow-circle-right
 
       section#support.mb-3
@@ -75,7 +90,7 @@
               v-card-text.py-5
                 v-layout(row wrap).text-xs-center
                   v-flex(xs12).mb-5
-                    h2 Has Vuetify helped you create an amazing application?<br> <br class="hidden-md-and-up"> You can show your support by making a <strong>donation</strong> in one of two ways:
+                    h2 Has Vuetify helped you create an amazing application?<br> <br class="hidden-md-and-up"> You can show your support by backing the project on Patreon or Paypal:
                   v-flex(xs12 sm3 offset-sm3)
                     a(
                       href="https://www.patreon.com/vuetify"
@@ -147,7 +162,7 @@
         a(
           href="https://opensource.org/licenses/MIT"
           target="_blank"
-        )  MIT License.
+        ).accent--text  MIT License.
 
 </template>
 
@@ -174,13 +189,6 @@
         ],
         toolbar: false
       }
-    },
-    mounted() {
-      // TODO: change this to v-scroll
-      window.addEventListener('scroll', this.onScroll, { passive: true })
-    },
-    beforeDestroy() {
-      window.removeEventListener('scroll', this.onScroll, { passive: true })
     },
     methods: {
       onScroll() {
